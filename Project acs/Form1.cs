@@ -73,12 +73,14 @@ namespace Project_acs
                         m.nama_peg = nama[idx].ToString();
                         m.jabatan = jabatan[idx].ToString();
                         m.ShowDialog();
+                        //Manager
                     }
                     else if (jabatan[idx].ToString()=="Owner")
                     {
                         owner o = new owner();
                         o.conn = conn;
                         o.ShowDialog();
+                        //owner
                     }
                     else
                     {
@@ -87,7 +89,7 @@ namespace Project_acs
                         l.nama = nama[idx].ToString();
                         l.jabatan = jabatan[idx].ToString();
                         l.ShowDialog();
-
+                        //pegawai biasa 
                         
 
                     }
