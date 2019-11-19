@@ -80,7 +80,8 @@ namespace Project_acs
                         owner o = new owner();
                         o.conn = conn;
                         o.ShowDialog();
-                        //owner
+                        //owner = wira
+                        
                     }
                     else
                     {
