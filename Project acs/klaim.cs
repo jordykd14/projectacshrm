@@ -22,22 +22,12 @@ namespace Project_acs
         public string jabatan;
         OracleCommand cmd;
         OracleDataReader reader;
-        List<string> id_peg = new List<string>();
         List<string> id_manager = new List<string>();
         private void klaim_Load(object sender, EventArgs e)
         {
-            id_peg.Clear();
             id_manager.Clear();
             conn.Close();
             conn.Open();
-            //cmd = new OracleCommand("select nama_pegawai,id_pegawai from pegawai where id_jabatan != 'JA001'", conn);
-            //reader = cmd.ExecuteReader();
-            //while (reader.Read()) 
-            //{
-            //    comboBox1.Items.Add(reader.GetString(0));
-            //    id_peg.Add(reader.GetString(1));
-            //}
-            //reader.Close();
             textBox1.Text = nama.ToString();
             textBox2.Text = jabatan.ToString();
             cmd = new OracleCommand("select nama_pegawai,id_pegawai from pegawai where id_jabatan = 'JA001'", conn);
@@ -66,21 +56,43 @@ namespace Project_acs
             conn.Close();
             conn.Open();
             string id = "";
-            MessageBox.Show(dateTimePicker1.Value.ToString("ddMMyyyy"));
-            cmd = new OracleCommand($"select fautogenid({dateTimePicker1.Value.ToString("ddMMyyyy")}) from dual", conn);
+            cmd = new OracleCommand($"select fautogenidhnota({dateTimePicker1.Value.ToString("ddMMyyyy")}) from dual", conn);
             reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
                 id = reader.GetString(0);
             }
             reader.Close();
-            MessageBox.Show(id.ToString());
             nota n = new nota();
             n.nama_pegawai = nama.ToString();
             n.nama_manager = comboBox2.SelectedItem.ToString();
             n.id = id.ToString();
             n.conn = conn;
+                
+            string idPeg = "";
+            string idMan = "";
+            cmd = new OracleCommand($"select p.id_pegawai from pegawai p where p.nama_pegawai = '{nama.ToString()}'",conn);
+            reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+               idPeg = reader.GetString(0);
+            }
+            reader.Close();
+
+            cmd = new OracleCommand($"select p.id_pegawai from pegawai p where p.nama_pegawai = '{comboBox2.SelectedItem.ToString()}'",conn);
+            reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                idMan = reader.GetString(0);
+            }
+            reader.Close();
+            string tgl = dateTimePicker1.Value.ToString("dd/MM/yyyy");
+            cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','DD/MM/YYYY'),{null},{0},'{idPeg}','{idMan}','{0}')", conn);
+            cmd.ExecuteNonQuery();
+
             n.ShowDialog();
+
+            
 
         }
     }

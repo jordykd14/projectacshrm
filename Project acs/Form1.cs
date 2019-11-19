@@ -21,10 +21,11 @@ namespace Project_acs
         OracleConnection conn;
         OracleDataReader reader;
         bool cek = false;
-        List<string> nama = new List<string>();
-        List<string> username = new List<string>();
-        List<string> pass = new List<string>();
-        List<string> jabatan = new List<string>();
+        public List<string> nama = new List<string>();
+        public List<string> username = new List<string>();
+        public List<string> pass = new List<string>();
+        public List<string> jabatan = new List<string>();
+        public List<string> idPeg = new List<string>();
         private void Form1_Load(object sender, EventArgs e)
         {
             nama.Clear();
@@ -34,19 +35,18 @@ namespace Project_acs
             conn = new OracleConnection("data source = XE; user id = proyek;password = proyek");
             conn.Close();
             conn.Open();
-            cmd = new OracleCommand("select p.nama_pegawai,p.pass,j.nama_jabatan,p.username from pegawai p,jabatan j where p.id_jabatan = j.id_jabatan",conn);
+            cmd = new OracleCommand("select p.id_pegawai, p.nama_pegawai,p.pass,j.nama_jabatan,p.username from pegawai p,jabatan j where p.id_jabatan = j.id_jabatan",conn);
             reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                nama.Add(reader.GetString(0));
-                pass.Add(reader.GetString(1));
-                jabatan.Add(reader.GetString(2));
-                username.Add(reader.GetString(3));
+                idPeg.Add(reader.GetString(0));
+                nama.Add(reader.GetString(1));
+                pass.Add(reader.GetString(2));
+                jabatan.Add(reader.GetString(3));
+                username.Add(reader.GetString(4));
             }
             reader.Close();
             conn.Close();
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -80,7 +80,7 @@ namespace Project_acs
                         owner o = new owner();
                         o.conn = conn;
                         o.ShowDialog();
-                        //owner = wira
+                        //owner
                         
                     }
                     else

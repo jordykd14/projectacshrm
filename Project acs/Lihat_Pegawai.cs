@@ -115,6 +115,7 @@ namespace Project_acs
             textBox3.Clear();
             textBox4.Clear();
             comboBox1.SelectedIndex = -1;
+            dataGridView1.ClearSelection();
             mode ="insert";
         }
 
@@ -128,7 +129,7 @@ namespace Project_acs
                     {
                         conn.Close();
                         conn.Open();
-                        cmd = new OracleCommand($"select Autoid('{textBox2.Text}') from dual", conn);
+                        cmd = new OracleCommand($"select fautogenidPEG('{textBox2.Text}') from dual", conn);
                         reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
