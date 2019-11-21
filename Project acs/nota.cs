@@ -68,6 +68,15 @@ namespace Project_acs
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int idx = e.RowIndex;
+            if (e.ColumnIndex==3)
+            {
+                tanggal.Remove(dataGridView1.Rows[idx].Cells[0].Value.ToString());
+                jenis.Remove(dataGridView1.Rows[idx].Cells[1].Value.ToString());
+                uang.Remove(Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString()));
+                dataGridView1.Rows.RemoveAt(idx);
+
+            }
+            
             
         }
         

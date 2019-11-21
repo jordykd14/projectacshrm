@@ -54,6 +54,7 @@ namespace Project_acs
             reader.Close();
             conn.Close();
             button2.Visible = false;
+            button4.Enabled = false;
             load();
 
         }
@@ -92,6 +93,22 @@ namespace Project_acs
             textBox3.Text = dataGridView1.Rows[idx].Cells[2].Value.ToString();
             textBox4.Text = dataGridView1.Rows[idx].Cells[3].Value.ToString();
             comboBox1.SelectedItem = dataGridView1.Rows[idx].Cells[4].Value.ToString();
+            button1.Visible = false;
+            button2.Visible = true;
+            button4.Enabled = true;
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button1.Visible = true;
+            button2.Visible = false;
+            button4.Enabled = false;
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            comboBox1.SelectedIndex = -1;
         }
     }
 }
