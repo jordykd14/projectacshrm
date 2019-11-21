@@ -26,9 +26,13 @@ namespace Project_acs
         List<string> nama_pegawai = new List<string>();
         List<string> username = new List<string>();
         List<string> pasword = new List<string>();
+        String mode = "";
         private void button1_Click(object sender, EventArgs e)
         {
             //insert
+            conn.Close();
+            conn.Open();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -56,6 +60,7 @@ namespace Project_acs
             button2.Visible = false;
             button4.Enabled = false;
             load();
+            mode ="insert";
 
         }
         public void load()
@@ -96,6 +101,7 @@ namespace Project_acs
             button1.Visible = false;
             button2.Visible = true;
             button4.Enabled = true;
+            mode ="update";
 
         }
 
@@ -109,6 +115,35 @@ namespace Project_acs
             textBox3.Clear();
             textBox4.Clear();
             comboBox1.SelectedIndex = -1;
+            mode ="insert";
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox2.Text!="")
+            {
+                if (mode=="insert")
+                {
+                    if (textBox2.TextLength > 1)
+                    {
+                        conn.Close();
+                        conn.Open();
+                        cmd = new OracleCommand($"select Autoid('{textBox2.Text}') from dual", conn);
+                        reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            textBox1.Text = reader.GetString(0);
+                        }
+                        reader.Close();
+                        conn.Close();
+                    }
+                    else
+                    {
+                        textBox1.ResetText();
+                    }
+                }
+                
+            }
         }
     }
 }
