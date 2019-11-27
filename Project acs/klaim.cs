@@ -56,7 +56,7 @@ namespace Project_acs
             conn.Close();
             conn.Open();
             string id = "";
-            cmd = new OracleCommand($"select fautogenidhnota({dateTimePicker1.Value.ToString("ddMMyyyy")}) from dual", conn);
+            cmd = new OracleCommand($"select fautogenid({dateTimePicker1.Value.ToString("ddMMyyyy")}) from dual", conn);
             reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
@@ -87,7 +87,8 @@ namespace Project_acs
             }
             reader.Close();
             string tgl = dateTimePicker1.Value.ToString("dd/MM/yyyy");
-            cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','DD/MM/YYYY'),{null},{0},'{idPeg}','{idMan}','{0}')", conn);
+            MessageBox.Show(idMan.ToString());
+            cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','dd/MM/yyyy'), "+"Null"+",{0},'{idPeg}','{idMan}','{0}')", conn);
             cmd.ExecuteNonQuery();
 
             n.ShowDialog();

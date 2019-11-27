@@ -129,7 +129,7 @@ namespace Project_acs
                     {
                         conn.Close();
                         conn.Open();
-                        cmd = new OracleCommand($"select fautogenidPEG('{textBox2.Text}') from dual", conn);
+                        cmd = new OracleCommand($"select autoid('{textBox2.Text}') from dual", conn);
                         reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
