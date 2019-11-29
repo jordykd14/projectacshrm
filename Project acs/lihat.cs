@@ -25,6 +25,12 @@ namespace Project_acs
 
         }
 
+        public void load()
+        {
+            conn.Close();
+            conn.Open();
+            OracleCommand cmd = new OracleCommand("SELECT H.ID_NOTA, H.TANGGAL_DISERAHKAN, H.TOTAL, P.NAMA_PEGAWAI, H.STATUS FROM HNOTA H, PEGAWAI P");
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             klaim k = new klaim();

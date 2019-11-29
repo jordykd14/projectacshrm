@@ -88,7 +88,7 @@ namespace Project_acs
             reader.Close();
             string tgl = dateTimePicker1.Value.ToString("dd/MM/yyyy");
             MessageBox.Show(idMan.ToString());
-            cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','dd/MM/yyyy'), "+"Null"+",{0},'{idPeg}','{idMan}','{0}')", conn);
+            cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','dd/MM/yyyy'), '{null}',{0},'{idPeg}','{idMan}','{0}')", conn);
             cmd.ExecuteNonQuery();
 
             n.ShowDialog();

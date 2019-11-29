@@ -74,11 +74,49 @@ namespace Project_acs
                 jenis.Remove(dataGridView1.Rows[idx].Cells[1].Value.ToString());
                 uang.Remove(Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString()));
                 dataGridView1.Rows.RemoveAt(idx);
-
             }
             
             
         }
-        
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            conn.Close();
+            conn.Open();
+            int index = 0; ;
+            Boolean berhasil = false;
+            try
+            {
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    OracleCommand commit = new OracleCommand("commit",conn);
+                    commit.ExecuteNonQuery();
+                    int idx = -1;
+                    string tgl = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                    for (int j = 0; j < jenis.Count; j++)
+                    {
+                        if (jenis[j] == dataGridView1.Rows[i].Cells[1].Value.ToString())
+                        {
+                            idx = j;
+                        }
+                    }
+                    int harga = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value.ToString());
+                    double hargaBersih = harga - (harga * 10 / 100);
+                    OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih})", conn);
+                    cmd.ExecuteNonQuery();
+                    index++;
+                }
+                MessageBox.Show("Berhasil mengklaim nota");
+                this.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Klaim nota gagal, coba ulang kembali");
+                OracleCommand roll = new OracleCommand("rollback", conn);
+                roll.ExecuteNonQuery();
+            }
+            
+            
+        }
     }
 }
