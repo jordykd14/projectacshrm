@@ -25,13 +25,33 @@ namespace Project_acs
 
         }
 
-        private void kalimToolStripMenuItem_Click(object sender, EventArgs e)
+        private void approveNotaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+          
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             klaim k = new klaim();
             k.nama = nama_peg;
             k.jabatan = jabatan;
             k.conn = conn;
             k.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Approve a = new Approve();
+            a.nama = nama_peg;
+            a.conn = conn;
+            a.ShowDialog();
+        }
+
+        private void kalimToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

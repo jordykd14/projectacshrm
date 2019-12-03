@@ -87,6 +87,7 @@ namespace Project_acs
                     {
                         lihat l = new lihat();
                         l.conn = conn;
+                        l.id_peg = idPeg[idx].ToString();
                         l.nama = nama[idx].ToString();
                         l.jabatan = jabatan[idx].ToString();
                         l.ShowDialog();

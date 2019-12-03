@@ -67,8 +67,7 @@ namespace Project_acs
             n.nama_pegawai = nama.ToString();
             n.nama_manager = comboBox2.SelectedItem.ToString();
             n.id = id.ToString();
-            n.conn = conn;
-                
+            n.conn = conn;  
             string idPeg = "";
             string idMan = "";
             cmd = new OracleCommand($"select p.id_pegawai from pegawai p where p.nama_pegawai = '{nama.ToString()}'",conn);
@@ -87,11 +86,13 @@ namespace Project_acs
             }
             reader.Close();
             string tgl = dateTimePicker1.Value.ToString("dd/MM/yyyy");
-            MessageBox.Show(idMan.ToString());
             cmd = new OracleCommand($"insert into hnota values('{id.ToString()}',to_date('{tgl}','dd/MM/yyyy'), '{null}',{0},'{idPeg}','{idMan}','{0}')", conn);
             cmd.ExecuteNonQuery();
-
+            this.Close();
             n.ShowDialog();
+            
+          
+            
 
             
 
