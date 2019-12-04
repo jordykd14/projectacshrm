@@ -32,12 +32,23 @@ namespace Project_acs
             //insert
             conn.Close();
             conn.Open();
+            cmd = new OracleCommand($"insert into pegawai values('{id_jabatan[comboBox1.SelectedIndex].ToString()}','{textBox1.Text}','{textBox2.Text}','{textBox3.Text}','{textBox4.Text}')", conn);
+            cmd.ExecuteNonQuery();
+            load();
+            button4_Click(this, e);
             
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //update
+            MessageBox.Show("Test");
+            conn.Close();
+            conn.Open();
+            cmd = new OracleCommand($"update pegawai set id_jabatan='{id_jabatan[comboBox1.SelectedIndex].ToString()}', nama_pegawai='{textBox2.Text}', username='{textBox3.Text}',pass='{textBox4.Text}' where id_pegawai='{textBox1.Text}'", conn);
+            cmd.ExecuteNonQuery();
+            Lihat_Pegawai_Load(this, e);
+            button4_Click(this, e);
         }
 
         private void Lihat_Pegawai_Load(object sender, EventArgs e)
@@ -45,6 +56,7 @@ namespace Project_acs
             conn.Close();
             conn.Open();
             id_jabatan.Clear();
+            comboBox1.Items.Clear();
             cmd = new OracleCommand("select nama_jabatan, id_jabatan from jabatan", conn);
             reader = cmd.ExecuteReader();
             while (reader.Read())
