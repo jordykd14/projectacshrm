@@ -36,6 +36,7 @@ namespace Project_acs
 
         public void load()
         {
+            dataGridView1.Rows.Clear();
             id_nota.Clear();
             tanggal.Clear();
             total.Clear();
@@ -55,7 +56,7 @@ namespace Project_acs
                 }
                 else if (reader.GetString(3)=="0")
                 {
-                    status.Add("Belom Disetujui");
+                    status.Add("Belum Disetujui");
                 }
             }
             reader.Close();
@@ -82,9 +83,13 @@ namespace Project_acs
             k.conn = conn;
             k.nama = nama;
             k.jabatan = jabatan;
-            this.Close();
             k.ShowDialog();
             
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            load();
         }
     }
 }

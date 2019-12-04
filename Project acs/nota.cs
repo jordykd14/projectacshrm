@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
@@ -16,6 +12,8 @@ namespace Project_acs
         public nota()
         {
             InitializeComponent();
+            button1.Enabled = false;
+            button2.Enabled = false;
         }
 
         public string nama_pegawai;
@@ -31,6 +29,8 @@ namespace Project_acs
         public OracleConnection conn;
         OracleCommand cmd;
         OracleDataReader reader;
+        List<string> gambar = new List<string>();
+        List<string> lokasi = new List<string>();
         int total = 0;
         private void nota_Load(object sender, EventArgs e)
         {
@@ -59,7 +59,6 @@ namespace Project_acs
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             //dataGridView1.Rows.Add(dateTimePicker1.Value.ToString("dd/MM/yyyy"), comboBox1.SelectedItem.ToString(),harga.ToString(), "Hapus");
             tanggal.Add(dateTimePicker1.Value.ToString("dd/MM/yyyy"));
             jenis.Add(comboBox1.SelectedItem.ToString());
@@ -73,7 +72,15 @@ namespace Project_acs
             label8.Text = total.ToString();
             numericUpDown1.Value = 0;
             comboBox1.SelectedIndex = -1;
-            
+
+            gambar.Add(nameImage);
+            lokasi.Add(file.FileName);
+
+            nameImage = null;
+            file.FileName = null;
+            pictureBox1.Image = null;
+            button2.Enabled = true;
+            button1.Enabled = false;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -103,6 +110,16 @@ namespace Project_acs
             {
                 for (int i = 0; i < dataGridView1.RowCount; i++)
                 {
+                    string sourceFile = @""+lokasi[i]+"";
+                    string destinationFile = @""+ Application.StartupPath + "\\BuktiBayar\\"+gambar[i];
+                    try
+                    {
+                        File.Copy(sourceFile, destinationFile, true);
+                    }
+                    catch (IOException iox)
+                    {
+                        MessageBox.Show(iox.ToString());
+                    }
                     OracleCommand commit = new OracleCommand("commit",conn);
                     commit.ExecuteNonQuery();
                     int idx = -1;
@@ -117,7 +134,16 @@ namespace Project_acs
                     int harga = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value.ToString());
                     double hargaBersih = harga + (harga * 10 / 100);
                     total_bersih += hargaBersih;
-                    OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih})", conn);
+                    if (lokasi[i] == null)
+                    {
+                        MessageBox.Show("Test");
+                        OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{null}')", conn);
+                    }
+                    else
+                    {
+                        OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{lokasi[i]}')", conn);
+                    }
+                    
                     cmd.ExecuteNonQuery();
                     index++;
                 }
@@ -130,25 +156,43 @@ namespace Project_acs
                     id_peg = reader.GetString(0);
                     jabatan = reader.GetString(1);
 
-                }
-                lihat l = new lihat();
-                l.conn = conn;
-                l.id_peg = id_peg;
-                l.nama = nama_pegawai;
-                l.jabatan = jabatan;                                         
+                }                                      
                 MessageBox.Show("Berhasil mengklaim nota");
                 this.Close();
-                l.ShowDialog();
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Klaim nota gagal, coba ulang kembali");
                 OracleCommand roll = new OracleCommand("rollback", conn);
                 roll.ExecuteNonQuery();
             }
             
+            
+        }
+
+        string nameImage;
+        OpenFileDialog file = new OpenFileDialog();
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string inDirectory = file.InitialDirectory;
+            inDirectory = @"C:\";
+            file.Title = "Open Image File";
+            file.Filter = "Image Files(*.jpg,*.png,*.tiff,*.bmp,*.gif)|*.jpg;*.png;*.tiff;*.bmp;*.gif";
+            file.FilterIndex = 2;
+            file.RestoreDirectory = true;
+            
+            if (file.ShowDialog() == DialogResult.OK)
+            {
+                Image gbr = new Bitmap(file.FileName);
+                pictureBox1.Image = new Bitmap(gbr, pictureBox1.Width,pictureBox1.Height);
+                nameImage = file.FileName.Substring(file.FileName.LastIndexOf('\\') + 1);
+                gambar.Add(nameImage);
+                lokasi.Add(file.FileName);
+                button1.Enabled = true;
+            }
             
         }
     }
