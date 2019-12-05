@@ -187,6 +187,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(213, 24);
             this.comboBox1.TabIndex = 10;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -200,7 +201,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(369, 403);
+            this.button2.Location = new System.Drawing.Point(369, 405);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(117, 44);
             this.button2.TabIndex = 12;

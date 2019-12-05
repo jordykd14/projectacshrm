@@ -34,7 +34,7 @@ namespace Project_acs
             conn.Open();
             cmd = new OracleCommand($"insert into pegawai values('{id_jabatan[comboBox1.SelectedIndex].ToString()}','{textBox1.Text}','{textBox2.Text}','{textBox3.Text}','{textBox4.Text}')", conn);
             cmd.ExecuteNonQuery();
-            load();
+            Lihat_Pegawai_Load(this, e);
             button4_Click(this, e);
             
         }
@@ -42,12 +42,12 @@ namespace Project_acs
         private void button2_Click(object sender, EventArgs e)
         {
             //update
-            MessageBox.Show("Test");
+            //MessageBox.Show("Test");
             conn.Close();
             conn.Open();
-            cmd = new OracleCommand($"update pegawai set id_jabatan='{id_jabatan[comboBox1.SelectedIndex].ToString()}', nama_pegawai='{textBox2.Text}', username='{textBox3.Text}',pass='{textBox4.Text}' where id_pegawai='{textBox1.Text}'", conn);
+            cmd = new OracleCommand($"update pegawai set id_jabatan='{id_jabatan[comboBox1.SelectedIndex]}', nama_pegawai='{textBox2.Text}', username='{textBox3.Text}',pass='{textBox4.Text}' where id_pegawai='{textBox1.Text}'", conn);
             cmd.ExecuteNonQuery();
-            Lihat_Pegawai_Load(this, e);
+            load();
             button4_Click(this, e);
         }
 
@@ -80,6 +80,7 @@ namespace Project_acs
             id_pegawai.Clear();
             nama_pegawai.Clear();
             username.Clear();
+            nama_jabatan.Clear();
             pasword.Clear();
             conn.Close();
             conn.Open();
@@ -104,6 +105,7 @@ namespace Project_acs
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            mode = "update";
             int idx = e.RowIndex;
             textBox1.Text = dataGridView1.Rows[idx].Cells[0].Value.ToString();
             textBox2.Text = dataGridView1.Rows[idx].Cells[1].Value.ToString();
@@ -113,12 +115,13 @@ namespace Project_acs
             button1.Visible = false;
             button2.Visible = true;
             button4.Enabled = true;
-            mode ="update";
+           
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            mode = "insert";
             button1.Visible = true;
             button2.Visible = false;
             button4.Enabled = false;
@@ -128,7 +131,7 @@ namespace Project_acs
             textBox4.Clear();
             comboBox1.SelectedIndex = -1;
             dataGridView1.ClearSelection();
-            mode ="insert";
+           
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -157,6 +160,11 @@ namespace Project_acs
                 }
                 
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }

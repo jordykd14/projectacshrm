@@ -134,16 +134,8 @@ namespace Project_acs
                     int harga = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value.ToString());
                     double hargaBersih = harga + (harga * 10 / 100);
                     total_bersih += hargaBersih;
-                    if (lokasi[i] == null)
-                    {
-                        MessageBox.Show("Test");
-                        OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{null}')", conn);
-                    }
-                    else
-                    {
-                        OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{lokasi[i]}')", conn);
-                    }
-                    
+                    OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{lokasi[i]}')", conn);
+
                     cmd.ExecuteNonQuery();
                     index++;
                 }
@@ -178,7 +170,7 @@ namespace Project_acs
         private void button3_Click(object sender, EventArgs e)
         {
             string inDirectory = file.InitialDirectory;
-            inDirectory = @"C:\";
+            inDirectory = @"D:\";
             file.Title = "Open Image File";
             file.Filter = "Image Files(*.jpg,*.png,*.tiff,*.bmp,*.gif)|*.jpg;*.png;*.tiff;*.bmp;*.gif";
             file.FilterIndex = 2;
