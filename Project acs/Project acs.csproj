@@ -125,6 +125,12 @@
       <DependentUpon>reportdetailnota.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="report_klaim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="report_klaim.Designer.cs">
+      <DependentUpon>report_klaim.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Approve.resx">
       <DependentUpon>Approve.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,6 +175,9 @@
     <EmbeddedResource Include="reportdetailnota.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>reportdetailnota.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="report_klaim.resx">
+      <DependentUpon>report_klaim.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

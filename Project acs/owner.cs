@@ -36,5 +36,12 @@ namespace Project_acs
             l.conn = conn;
             l.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            report_klaim r = new report_klaim();
+            r.conn = conn;
+            r.ShowDialog();
+        }
     }
 }
