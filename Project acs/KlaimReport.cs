@@ -16,14 +16,14 @@ namespace Project_acs {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CrystalReport1 : ReportClass {
+    public class KlaimReport : ReportClass {
         
-        public CrystalReport1() {
+        public KlaimReport() {
         }
         
         public override string ResourceName {
             get {
-                return "CrystalReport1.rpt";
+                return "KlaimReport.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Project_acs {
         
         public override string FullResourceName {
             get {
-                return "Project_acs.CrystalReport1.rpt";
+                return "Project_acs.KlaimReport.rpt";
             }
             set {
                 // Do nothing
@@ -103,12 +103,20 @@ namespace Project_acs {
                 return this.ReportDefinition.Sections[6];
             }
         }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_NamaPegawai {
+            get {
+                return this.DataDefinition.ParameterFields[0];
+            }
+        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCrystalReport1 : Component, ICachedReport {
+    public class CachedKlaimReport : Component, ICachedReport {
         
-        public CachedCrystalReport1() {
+        public CachedKlaimReport() {
         }
         
         [Browsable(false)]
@@ -145,7 +153,7 @@ namespace Project_acs {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CrystalReport1 rpt = new CrystalReport1();
+            KlaimReport rpt = new KlaimReport();
             rpt.Site = this.Site;
             return rpt;
         }

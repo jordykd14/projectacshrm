@@ -63,12 +63,6 @@
     <Compile Include="Approve.Designer.cs">
       <DependentUpon>Approve.cs</DependentUpon>
     </Compile>
-    <Compile Include="CrystalReport1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CrystalReport1.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +74,12 @@
     </Compile>
     <Compile Include="klaim.Designer.cs">
       <DependentUpon>klaim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KlaimReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KlaimReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="lihat.cs">
       <SubType>Form</SubType>
@@ -134,15 +134,15 @@
     <EmbeddedResource Include="Approve.resx">
       <DependentUpon>Approve.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReport1.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="klaim.resx">
       <DependentUpon>klaim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KlaimReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>KlaimReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="lihat.resx">
       <DependentUpon>lihat.cs</DependentUpon>
