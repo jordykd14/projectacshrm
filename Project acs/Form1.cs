@@ -20,19 +20,26 @@ namespace Project_acs
         OracleCommand cmd;
         OracleConnection conn;
         OracleDataReader reader;
-        bool cek = false;
+        bool cek = false;     
         public List<string> nama = new List<string>();
         public List<string> username = new List<string>();
         public List<string> pass = new List<string>();
         public List<string> jabatan = new List<string>();
         public List<string> idPeg = new List<string>();
+        string host = "192.168.0.118";
         private void Form1_Load(object sender, EventArgs e)
         {
             nama.Clear();
             pass.Clear();
             username.Clear();
             jabatan.Clear();
-            conn = new OracleConnection("data source = XE; user id = proyek;password = proyek");
+            //conn = new OracleConnection($"data source = {conect.datasource}; user id = {conect.iduser};password = {conect.password}");
+            conn = new OracleConnection("Data Source=" +
+                    "(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=" + conect.host + ")(PORT=1521)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=" + conect.datasource + ")));" +
+                    "user id=" + conect.iduser + ";password=" + conect.password);
             conn.Close();
             conn.Open();
             cmd = new OracleCommand("select p.id_pegawai, p.nama_pegawai,p.pass,j.nama_jabatan,p.username from pegawai p,jabatan j where p.id_jabatan = j.id_jabatan",conn);
@@ -73,6 +80,7 @@ namespace Project_acs
                         m.conn = conn;
                         m.nama_peg = nama[idx].ToString();
                         m.jabatan = jabatan[idx].ToString();
+                        this.Hide();
                         m.ShowDialog();
                         //Manager
                     }
@@ -80,9 +88,13 @@ namespace Project_acs
                     {
                         owner o = new owner();
                         o.conn = conn;
+                        this.Hide();
                         o.ShowDialog();
-                        //owner
                         
+                       
+
+                        //owner
+
                     }
                     else
                     {
@@ -91,6 +103,7 @@ namespace Project_acs
                         l.id_peg = idPeg[idx].ToString();
                         l.nama = nama[idx].ToString();
                         l.jabatan = jabatan[idx].ToString();
+                        this.Hide();
                         l.ShowDialog();
                         //pegawai biasa 
                         

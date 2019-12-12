@@ -49,6 +49,13 @@ namespace Project_acs
             a.ShowDialog();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form1 log = new Form1();
+            this.Hide();
+            log.ShowDialog();
+        }
+
         private void kalimToolStripMenuItem_Click(object sender, EventArgs e)
         {
 

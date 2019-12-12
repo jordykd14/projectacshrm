@@ -63,6 +63,12 @@
     <Compile Include="Approve.Designer.cs">
       <DependentUpon>Approve.cs</DependentUpon>
     </Compile>
+    <Compile Include="conect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="conect.Designer.cs">
+      <DependentUpon>conect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </Compile>
     <EmbeddedResource Include="Approve.resx">
       <DependentUpon>Approve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="conect.resx">
+      <DependentUpon>conect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

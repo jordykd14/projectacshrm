@@ -46,8 +46,9 @@ namespace Project_acs
             try
             {
                 crpt.SetDatabaseLogon("proyek", "proyek");
-                crpt.SetParameterValue("NamaPegawai", comboBox1.SelectedText);
+                crpt.SetParameterValue("NamaPegawai", comboBox1.SelectedItem.ToString());
                 crystalReportViewer1.ReportSource = crpt;
+                MessageBox.Show(comboBox1.SelectedItem.ToString());
             }
             catch (Exception ex)
             {

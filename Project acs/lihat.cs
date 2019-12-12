@@ -91,5 +91,12 @@ namespace Project_acs
         {
             load();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form1 log = new Form1();
+            this.Hide();
+            log.ShowDialog();
+        }
     }
 }
