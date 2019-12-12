@@ -34,21 +34,21 @@ namespace Project_acs
         {
             Lihat_Pegawai l = new Lihat_Pegawai();
             l.conn = conn;
-            l.ShowDialog();
+            l.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             report_klaim r = new report_klaim();
             r.conn = conn;
-            r.ShowDialog();
+            r.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             Form1 log = new Form1();
             this.Hide();
-            log.ShowDialog();
+            log.Show();
            
 
         }

@@ -166,5 +166,71 @@ namespace Project_acs
         {
            
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Boolean ada = false;
+
+            conn.Close();
+            conn.Open();
+            cmd = new OracleCommand($"select * from hnota where id_pegawai='{textBox1.Text}'",conn);
+            reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                ada = true;
+            }
+            reader.Close();
+
+            if (!ada)
+            {
+                cmd = new OracleCommand($"delete from pegawai where id_pegawai='{textBox1.Text}'", conn);
+                cmd.ExecuteNonQuery();
+                load();
+                button4_Click(this, e);
+            }
+            else
+            {
+                List<string> idNota = new List<string>();
+                cmd = new OracleCommand($"select id_nota from hnota where id_pegawai = '{textBox1.Text}'",conn);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    idNota.Add(reader.GetString(0));
+                }
+                reader.Close();
+
+                for (int i = 0; i < idNota.Count; i++)
+                {
+                    MessageBox.Show(idNota[i]);
+                    cmd = new OracleCommand($"delete from dnota where id_nota = '{idNota[i]}'",conn);
+                    cmd.ExecuteNonQuery();
+                }
+                cmd = new OracleCommand($"delete from hnota where id_pegawai = '{textBox1.Text}'",conn);
+                cmd.ExecuteNonQuery();
+
+                cmd = new OracleCommand($"delete from pegawai where id_pegawai='{textBox1.Text}'", conn);
+                cmd.ExecuteNonQuery();
+
+                int index = -1;
+
+                for (int i = 0; i < id_pegawai.Count; i++)
+                {
+                    if (id_pegawai[i] == textBox1.Text)
+                    {
+                        index = i;
+                    }
+                }
+
+                id_pegawai.RemoveAt(index);
+                nama_jabatan.RemoveAt(index);
+                nama_pegawai.RemoveAt(index);
+                username.RemoveAt(index);
+                pasword.RemoveAt(index);
+
+                load();
+                button4_Click(this, e);
+            }
+            
+        }
     }
 }
