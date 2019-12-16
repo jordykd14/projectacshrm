@@ -26,6 +26,7 @@ namespace Project_acs
         List<string> tanggal = new List<string>();
         List<string> jenis = new List<string>();
         List<int> uang = new List<int>();
+        List<int> pajak = new List<int>();
         public OracleConnection conn;
         OracleCommand cmd;
         OracleDataReader reader;
@@ -54,6 +55,7 @@ namespace Project_acs
             conn.Close();
             uang.Clear();
             tanggal.Clear();
+            pajak.Clear();
             jenis.Clear();
         }
 
@@ -64,9 +66,10 @@ namespace Project_acs
             jenis.Add(comboBox1.SelectedItem.ToString());
             uang.Add(Convert.ToInt32(numericUpDown1.Value));
             dataGridView1.Rows.Clear();
+            pajak.Add(Convert.ToInt32(numericUpDown2.Value));
             for (int i = 0; i < tanggal.Count; i++)
             {
-                dataGridView1.Rows.Add(tanggal[i].ToString(), jenis[i].ToString(), uang[i].ToString(),"Hapus");
+                dataGridView1.Rows.Add(tanggal[i].ToString(), jenis[i].ToString(), uang[i].ToString(),pajak[i].ToString(),"Hapus");
             }
             total += Convert.ToInt32(numericUpDown1.Value);
             label8.Text = total.ToString();
@@ -86,12 +89,13 @@ namespace Project_acs
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int idx = e.RowIndex;
-            if (e.ColumnIndex==3)
+            if (e.ColumnIndex==4)
             {
                 tanggal.Remove(dataGridView1.Rows[idx].Cells[0].Value.ToString());
                 jenis.Remove(dataGridView1.Rows[idx].Cells[1].Value.ToString());
                 total -= Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString());
                 uang.Remove(Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString()));
+                pajak.Remove(Convert.ToInt32(dataGridView1.Rows[idx].Cells[3].Value.ToString()));
                 dataGridView1.Rows.RemoveAt(idx);  
             }
             label8.Text = total.ToString();
@@ -131,10 +135,11 @@ namespace Project_acs
                             idx = j;
                         }
                     }
+                   
                     int harga = Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value.ToString());
-                    double hargaBersih = harga + (harga * 10 / 100);
+                    double hargaBersih = harga + (harga * pajak[i] / 100);
                     total_bersih += hargaBersih;
-                    OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{10},{hargaBersih},'{lokasi[i]}')", conn);
+                    OracleCommand cmd = new OracleCommand($"INSERT INTO DNOTA VALUES('{label6.Text}','{id_jenis[idx]}',TO_DATE('{tgl}','dd/MM/yyyy'),{harga},{pajak[i]},{hargaBersih},'{lokasi[i]}')", conn);
 
                     cmd.ExecuteNonQuery();
                     index++;

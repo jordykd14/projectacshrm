@@ -26,7 +26,9 @@ namespace Project_acs
             reportdetailnota crpt = new reportdetailnota();
             try
             {
-                crpt.SetDatabaseLogon("proyek", "proyek");
+                crpt.SetDatabaseLogon(conect.iduser, conect.password);
+                
+
             }
             catch (Exception)
             {
